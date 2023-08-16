@@ -1,0 +1,15 @@
+# Stage 1: Build the Nest.js application
+FROM public.ecr.aws/lambda/nodejs:18
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Install zip and create a zip file of the dist directory
+# RUN yum install -y zip && cd dist && zip ../dist.zip -r * .[^.]*
+
+CMD ["dist/lambda.handler"]

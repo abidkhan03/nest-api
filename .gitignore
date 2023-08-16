@@ -1,35 +1,39 @@
-# compiled output
-/dist
-/node_modules
+# dependencies
+node_modules/
+bin/
 
-# Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+# IDE
+/.vscode
+/.idea
 
-# OS
+# misc
 .DS_Store
+lerna-debug.log
+npm-debug.log
+yarn-error.log
+**/npm-debug.log
+.yarnrc.yml
+.yarn
 
-# Tests
+# environment
+.env
+
+# build
+/dist
+
+# tests
+/test
 /coverage
 /.nyc_output
+build/config\.gypi
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
+sqlite-example.sql
+
+# extra
+naming
+writing
+=
+
+# Mr. Developer
+*.sublime-project
 *.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json

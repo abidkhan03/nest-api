@@ -1,73 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Carma-Tech API, built based on [nest-starter](https://github.com/crazyoptimist/nest-starter)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![build & test](https://github.com/crazyoptimist/nest-starter/actions/workflows/build.yml/badge.svg)](https://github.com/crazyoptimist/nest-starter/actions/workflows/build.yml)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Build a modular REST API with NestJS framework.
 
-## Description
+## Table of Contents
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [What is this?](#what-is-this)
+- [Run(Dev Mode)](#rundev-mode)
+  - [With Docker](#with-docker)
+  - [Without Docker](#without-docker)
+- [DB Migrations](#db-migrations)
+  - [Generate a Migration](#generate-a-migration)
+  - [Run Pending Migrations](#run-pending-migrations)
+  - [Revert a Migration](#revert-a-migration)
+- [Tests](#tests)
+- [Environment Configuration](#environment-configuration)
+- [API Documentation](#api-documentation)
+- [Authentication](#authentication)
+- [License](#license)
+- [Maintainers](#maintainers)
 
-## Installation
+## What is this?
 
-```bash
-$ npm install
-```
+A REST API template based on NestJS with JWT auth, Open API 3.0 documentation, TypeORM integration already implemented.
 
-## Running the app
+## Run(Dev Mode)
+
+### With Docker
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cp .env.example .env
+docker-compose up -d
 ```
 
-## Test
+### Without Docker
+
+Create dotenv file and fill it with proper values
+
+```bash
+cp .env.example .env
+```
+
+Install dependencies
+
+```bash
+yarn install
+```
+
+Run the application
+
+```bash
+yarn start:dev
+```
+
+HMR(Hot Module Reload) is configured with webpack, so you can use
+
+```bash
+yarn start
+```
+
+## DB Migrations
+
+If you don't work on a production-ready project you can always change `DB_SYNC` env variable to true so you can play with NestJS without the need to write actual migrations.
+
+**`DB_SYNC` should not be set to `true` in production. You may lose production data otherwise!**
+
+### Generate a Migration
+
+Make sure to use `npm` for commands follow, because `yarn` does not support `$npm_config_name`.
+
+```bash
+npm run migration:generate --name=AddAgeColumnToUser
+```
+
+Or with docker:
+
+```bash
+docker exec -it nest npm run migration:generate --name=AddAgeColumnToUser
+```
+
+Migration files are placed under `src/migrations`.
+
+### Run Pending Migrations
+
+```bash
+yarn migration:run
+```
+
+### Revert a Migration
+
+```bash
+yarn migration:revert
+```
+
+## Tests
 
 ```bash
 # unit tests
-$ npm run test
+yarn test
 
 # e2e tests
-$ npm run test:e2e
+yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+yarn test:cov
 ```
 
-## Support
+## Environment Configuration
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+`@nestjs/config` is used, so you can just inject `ConfigService` to read environment variables from the dotenv file.
 
-## Stay in touch
+## API Documentation
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+OpenAPI 3.0 is configured, and the API docs is hosted at `BASE_URL/api/docs`.
+
+## Authentication
+
+JWT authentication is configured.
+
+It would be greater to change the current password hashing to something more secure.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+MIT
+
+## Maintainers
+
+[crazyoptimist](https://crazyoptimist.net)
+
+

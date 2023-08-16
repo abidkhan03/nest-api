@@ -15,6 +15,8 @@ import { TrimStringsPipe } from '@app/modules/common/transformer/trim-strings.pi
 
 declare const module: any;
 
+const APP_PORT = 3000;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   setupSwagger(app);
@@ -25,8 +27,7 @@ async function bootstrap() {
   );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
+  await app.listen(APP_PORT);
 
   if (module.hot) {
     module.hot.accept();
